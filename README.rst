@@ -3,7 +3,30 @@ Nodeshot CitySDK Synchronizers
 
 Additional nodeshot synchronizers developed for the CitySDK project.
 
-More information on nodeshot synchornizers here: http://nodeshot.readthedocs.org/en/latest/topics/synchronizers.html
+More information on nodeshot synchronizers here: http://nodeshot.rtfd.org/en/latest/topics/synchronizers.html
+
+Install
+*******
+
+.. code-block:: bash
+
+    pip install nodeshot_citysdk_synchronizers
+
+Setup
+*****
+
+Add ``nodeshot_citysdk_synchronizers`` to ``settings.INSTALLED_APPS``.
+
+.. code-block:: python
+
+    # settings.py
+    INSTALLED_APPS.append('nodeshot_citysdk_synchronizers')
+
+Usage
+*****
+
+Use the synchronizers as any other nodeshot synchronizer, each synchronizer
+will show its configuration fields upon selection.
 
 License (BSD)
 =============
