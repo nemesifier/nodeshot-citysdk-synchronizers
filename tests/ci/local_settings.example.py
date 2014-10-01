@@ -1,3 +1,14 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'nodeshot_citysdk_ci',
+        'USER': 'postgres',
+        'PASSWORD':  'password',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+
 NODESHOT_CITYSDK_TOURISM_TEST_CONFIG = {
     "citysdk_category": "Testing Layer",
     "citysdk_category_id": "IDHERE",
