@@ -77,7 +77,17 @@ class CitySdkTourismMixin(object):
             'class': 'CharField',
             'kwargs': {
                 'max_length': 16,
+                'default': 'center',
                 'help_text': _('term (eg: center)'),
+            }
+        },
+        {
+            'name': 'citysdk_type',
+            'class': 'CharField',
+            'kwargs': {
+                'max_length': 16,
+                'default': 'poi',
+                'help_text': _('type (eg: poi)'),
             }
         },
         {
@@ -102,6 +112,8 @@ class CitySdkTourismMixin(object):
             self.citysdk_resource_url = '%s%ss/' % (self.config['citysdk_url'], self.config['citysdk_type'])
             self.citysdk_categories_url = '%scategories?list=%s&limit=0&format=json' % (self.config['citysdk_url'], self.config['citysdk_type'])
             self.citysdk_category_id = self.config.get('citysdk_category_id')
+
+        self.verify_ssl=self.config.get('verify_ssl', True)
 
     def clean(self):
         """
@@ -143,7 +155,7 @@ class CitySdkTourismMixin(object):
 
         citysdk_auth_url = '%sauth?format=json' % self.config['citysdk_url']
 
-        response = requests.post(citysdk_auth_url, {
+        response = requests.post(citysdk_auth_url, verify=self.verify_ssl, params={
             'username': self.config['citysdk_username'],
             'password': self.config['citysdk_password'],
         })
@@ -172,13 +184,14 @@ class CitySdkTourismMixin(object):
         if layer_config:
             self.config = layer_config
 
-        citysdk_category_id = self.config.get('citysdk_category_id', False)
         self.authenticate()
-        response = requests.get(self.citysdk_categories_url, cookies=self.cookies)
+        response = requests.get(self.citysdk_categories_url, cookies=self.cookies, verify=self.verify_ssl)
+
+        citysdk_category_id = self.citysdk_category_id
 
         # do we already have the category id in the db config?
         # And is the category present in the API response?
-        if citysdk_category_id is not False and citysdk_category_id in response.content:
+        if citysdk_category_id and citysdk_category_id in response.content:
             message = 'category with ID "%s" already present in config' % citysdk_category_id
             self.verbose(message)
             logger.info(message)
@@ -211,7 +224,8 @@ class CitySdkTourismMixin(object):
                 # put to create
                 response = requests.put(self.citysdk_categories_url, data=json.dumps(category),
                                         headers={'content-type': 'application/json'},
-                                        cookies=self.cookies)
+                                        cookies=self.cookies,
+                                        verify=self.verify_ssl)
 
                 # raise exception if something has gone wrong
                 if response.status_code is not 200:
@@ -243,7 +257,7 @@ class CitySdkTourismMixin(object):
             # now store ID in the database both in case category has been created or not
             self.config['citysdk_category_id'] = citysdk_category_id
             self.layer.external.config = self.config
-            self.layer.external.save()
+            self.layer.external.save(after_save=False)
             # verbose output
             message = 'category with ID "%s" has been stored in config' % citysdk_category_id
             self.verbose(message)
@@ -324,7 +338,8 @@ END:VCARD""" % (
 
         # citysdk sync
         response = requests.put(self.citysdk_resource_url, data=json.dumps(citysdk_record),
-                     headers={ 'content-type': 'application/json' }, cookies=self.cookies)
+                     headers={ 'content-type': 'application/json' }, cookies=self.cookies,
+                     verify=self.verify_ssl)
 
         if response.status_code != 200:
             message = 'ERROR while creating "%s". Response: %s' % (node.name, response.content)
@@ -358,7 +373,8 @@ END:VCARD""" % (
                         self.citysdk_resource_url,
                         data=json.dumps(citysdk_record),
                         headers={ 'content-type': 'application/json' },
-                        cookies=self.cookies)
+                        cookies=self.cookies,
+                        verify=self.verify_ssl)
 
             if response.status_code == 200:
                 message = 'Updated record "%s" through the CitySDK HTTP API' % node.name
