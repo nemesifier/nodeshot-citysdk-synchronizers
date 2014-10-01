@@ -1,1 +1,1 @@
-nodeshot
+https://github.com/ninuxorg/nodeshot/tarball/master
