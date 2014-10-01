@@ -14,6 +14,7 @@ def get_version():
     return version
 
 
+from .settings import NODESHOT_SYNCHRONIZERS
 from .citysdk_mobility import CitySdkMobility
 from .citysdk_tourism import CitySdkTourism
 from .geojson_citysdk_mobility import GeoJsonCitySdkMobility
