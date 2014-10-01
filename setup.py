@@ -44,17 +44,17 @@ def get_package_data(package):
 
 
 if sys.argv[-1] == 'publish':
-    os.system("python setup.py sdist upload")
-    args = {'version': get_version(package)}
+    os.system("python setup.py sdist upload --sign")
+    args = {'version': get_version()}
     print "You probably want to also tag the version now:"
-    print "  git tag -a %(version)s -m 'version %(version)s'" % args
+    print "  git tag -s %(version)s" % args
     print "  git push --tags"
     sys.exit()
 
 
 setup(
     name=name,
-    version=get_version(package),
+    version=get_version(),
     url=url,
     license=license,
     description=description,
