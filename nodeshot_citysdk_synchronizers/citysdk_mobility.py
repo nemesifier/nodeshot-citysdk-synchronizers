@@ -45,7 +45,15 @@ class CitySdkMobilityMixin(object):
                 'max_length': 128,
                 'help_text': _('Password of user who has write permission'),
             }
-        }
+        },
+        {
+            'name': 'citysdk_layer',
+            'class': 'CharField',
+            'kwargs': {
+                'max_length': 128,
+                'help_text': _('Layer name on CitySDK Mobility API')
+            }
+        },
     ]
 
     def __init__(self, *args, **kwargs):
