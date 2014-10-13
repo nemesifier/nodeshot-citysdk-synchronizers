@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'nodeshot.core.api',
     'nodeshot.core.layers',
     'nodeshot.core.nodes',
+    'nodeshot.community.profiles',
     'nodeshot.interop.sync',
     'nodeshot_citysdk_synchronizers',
     # 3d parthy django apps
@@ -67,7 +68,7 @@ INSTALLED_APPS = [
     'django_extensions',
 ]
 
-AUTH_USER_MODEL = 'auth.User'
+#AUTH_USER_MODEL = 'auth.User'
 
 # ------ All settings customizations must go here ------ #
 
