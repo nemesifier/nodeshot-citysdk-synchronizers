@@ -34,7 +34,7 @@ class CitySdkSyncTest(TestCase):
         """ test ProvinciaWifi synchronizer """
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = False
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
@@ -112,7 +112,7 @@ class CitySdkSyncTest(TestCase):
         """ test ProvinceRomeTraffic converter """
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = False
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
@@ -219,7 +219,7 @@ class CitySdkSyncTest(TestCase):
     def test_openlabor_get_nodes(self):
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = True
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
@@ -257,7 +257,7 @@ class CitySdkSyncTest(TestCase):
     def test_openlabor_add_node(self):
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = True
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
@@ -298,7 +298,7 @@ class CitySdkSyncTest(TestCase):
     def test_openwisp_citysdk_tourism(self):
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = False
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
@@ -377,7 +377,7 @@ class CitySdkSyncTest(TestCase):
     def test_geojson_citysdk_tourism(self):
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = False
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
@@ -474,7 +474,7 @@ class CitySdkSyncTest(TestCase):
     def test_provinciawifi_citysdk_tourism(self):
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = False
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
@@ -557,7 +557,7 @@ class CitySdkSyncTest(TestCase):
     def test_geojson_citysdk_mobility(self):
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = False
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
@@ -654,7 +654,7 @@ class CitySdkSyncTest(TestCase):
     def test_provinciawifi_citysdk_mobility(self):
         layer = Layer.objects.external()[0]
         layer.minimum_distance = 0
-        layer.area = None
+        layer.area = 'POINT (12.0 42.0)'
         layer.new_nodes_allowed = False
         layer.save()
         layer = Layer.objects.get(pk=layer.pk)
