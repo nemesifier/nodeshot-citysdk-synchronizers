@@ -1,6 +1,8 @@
 Nodeshot CitySDK Synchronizers
 ==============================
 
+.. image:: https://ci.publicwifi.it/buildStatus/icon?job=nodeshot-citysdk-synchronizers
+
 Additional nodeshot synchronizers developed for the CitySDK project.
 
 More information on nodeshot synchronizers here: http://nodeshot.rtfd.org/en/latest/topics/synchronizers.html
