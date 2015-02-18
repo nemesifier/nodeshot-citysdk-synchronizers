@@ -3,7 +3,6 @@ from __future__ import absolute_import
 from django.template.defaultfilters import slugify
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ValidationError
-from django.conf import settings
 
 from nodeshot.core.nodes.models import Node, Status
 from nodeshot.interop.sync.synchronizers.base import XmlSynchronizer, GenericGisSynchronizer
@@ -11,7 +10,7 @@ from nodeshot.interop.sync.synchronizers.base import XmlSynchronizer, GenericGis
 
 class ProvinciaWifi(XmlSynchronizer):
     """ ProvinciaWifi synchronizer class """
-    SCHEMA = GenericGisSynchronizer.SCHEMA[0:2]
+    SCHEMA = GenericGisSynchronizer.SCHEMA[0:3]
 
     def save(self):
         """ synchronize DB """
@@ -30,7 +29,7 @@ class ProvinciaWifi(XmlSynchronizer):
         deleted_nodes_count = 0
 
         try:
-            self.status = Status.objects.get(slug=self.config.get('status', None))
+            self.status = Status.objects.get(slug=self.config.get('default_status', None))
         except Status.DoesNotExist:
             self.status = None
 
@@ -86,6 +85,10 @@ class ProvinciaWifi(XmlSynchronizer):
                 node.status = self.status
                 added = True
 
+            if self.status is not None and node.status != self.status:
+                node.status = self.status
+                changed = True
+
             if node.name != name:
                 node.name = name
                 changed = True
@@ -136,7 +139,7 @@ class ProvinciaWifi(XmlSynchronizer):
         # delete old nodes
         for local_node in local_nodes_slug:
             # if local node not found in external nodes
-            if not local_node in external_nodes_slug:
+            if local_node not in external_nodes_slug:
                 node_name = node.name
                 # retrieve from DB and delete
                 node = Node.objects.get(slug=local_node)
