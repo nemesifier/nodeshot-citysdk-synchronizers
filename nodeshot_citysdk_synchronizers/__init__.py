@@ -28,4 +28,3 @@ else:
     from .provinciawifi_citysdk_mobility import ProvinciaWifiCitySdkMobility
     from .provinciawifi_citysdk_tourism import ProvinciaWifiCitySdkTourism
     from .provincerometraffic import ProvinceRomeTraffic
-    from .openlabor import OpenLabor
