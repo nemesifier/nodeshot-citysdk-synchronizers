@@ -35,17 +35,22 @@ class ProvinciaWifi(XmlSynchronizer):
 
         # loop over every parsed item
         for item in items:
+            address = '%s, %s' % (
+                self.get_text(item, 'Indirizzo'),
+                self.get_text(item, 'Comune')
+            )
             # retrieve info in auxiliary variables
             # readability counts!
             name = self.get_text(item, 'Denominazione')[0:70]
+            # "denominazione" might be empty
+            if not name:
+                name = address
             slug = slugify(name)
-
+            # items might have the same name... so we add a number..
             number = 1
             original_name = name
             needed_different_name = False
-
             while True:
-                # items might have the same name... so we add a number..
                 if slug in external_nodes_slug:
                     needed_different_name = True
                     number = number + 1
@@ -62,10 +67,6 @@ class ProvinciaWifi(XmlSynchronizer):
                 self.get_text(item, 'Indirizzo'),
                 self.get_text(item, 'Comune'),
                 self.get_text(item, 'Tipologia')
-            )
-            address = '%s, %s' % (
-                self.get_text(item, 'Indirizzo'),
-                self.get_text(item, 'Comune')
             )
 
             # point object
